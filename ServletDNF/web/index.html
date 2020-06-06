@@ -1,0 +1,52 @@
+
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <form id="form">
+            
+            <input id="todo" type="text">
+            <input type="submit" value="Salvar">
+        </form>
+    </body>
+    <script>
+        document.querySelector('#form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let todo = document.getElementById('todo').value;
+            let funcao = 'adicionar';
+
+            let corpo = `conteudo=${todo}&funcao=${funcao}`;
+            requisicao('/donotforget/ServletDNF', corpo, resposta, error);
+        });
+
+        function requisicao(url, corpo, callbackOk, callbackErro) {
+            var http = new XMLHttpRequest();
+            http.open("POST", url, true);
+            http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            http.addEventListener('load', function() {
+                if (http.status < 400)
+                    callbackOk(http.response);
+                else
+                    callbackErro(http.response);
+
+            });
+            http.addEventListener('error', function() {
+                callbackErro(`Erro de Rede!`);
+            });
+            http.send(corpo);
+        }
+
+        function resposta(resp) {
+            alert(JSON.parse(resp).data);
+        }
+
+        function error(resp) {
+            alert(`Itens Faltando: ${JSON.parse(resp).erro}`);
+        }
+    </script>
+</html>
