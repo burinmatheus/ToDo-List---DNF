@@ -74,16 +74,11 @@ public class Funcoes {
     public String editar(HttpServletRequest request, HttpServletResponse response) {
 
         int id = 0, status = 0;
-        String conteudo = "";
-        
-        if (request.getParameter("conteudo") != null) {
-            conteudo = request.getParameter("conteudo");
-        }
-        
+
         if (request.getParameter("id") != null) {
             id = Integer.parseInt(request.getParameter("id"));
         }
-        
+
         if (request.getParameter("status") != null) {
             status = Integer.parseInt(request.getParameter("status"));
         }
@@ -91,7 +86,6 @@ public class Funcoes {
         ModelDNF dnf = new ModelDNF();
         dnf.setId(id);
         dnf.setStatus(status);
-        dnf.setConteudo(conteudo);
 
         try {
             new DAODNF().editar(dnf);
@@ -103,7 +97,7 @@ public class Funcoes {
         }
 
     }
-    
+
     public String listar(HttpServletRequest request, HttpServletResponse response) throws SQLException {
         List<ModelDNF> todos = new DAODNF().buscarTodos();
 
@@ -131,14 +125,11 @@ public class Funcoes {
     }
 
     public String deletar(HttpServletRequest request, HttpServletResponse response) {
-        
+
         int id = Integer.parseInt(request.getParameter("id"));
-        ModelDNF dnf = new ModelDNF();
-        dnf.setId(id);
-        
-        
-         try {
-            new DAODNF().deletar(dnf);
+
+        try {
+            new DAODNF().deletar(id);
             response.setStatus(200);
             return ("{\"data\":\"Excluído com sucesso!\"}");
         } catch (SQLException ex) {

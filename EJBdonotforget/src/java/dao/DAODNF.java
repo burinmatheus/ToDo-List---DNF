@@ -35,23 +35,22 @@ public class DAODNF {
 
     public void editar(ModelDNF dnf) throws SQLException {
         String sql = " UPDATE TODO "
-                + "SET STATUS = ?, CONTEUDO = ? "
+                + "SET STATUS = ? "
                 + "WHERE ID = ? ";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, dnf.getStatus());
-            ps.setString(2, dnf.getConteudo());
-            ps.setInt(3, dnf.getId());
+            ps.setInt(2, dnf.getId());
             ps.execute();
         }
     }
 
-    public void deletar(ModelDNF dnf) throws SQLException {
+    public void deletar(int dnf) throws SQLException {
         String sql = "DELETE FROM TODO "
                 + "WHERE ID = ? ";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, dnf.getId());
+            ps.setInt(1, dnf);
             ps.execute();
         }
     }

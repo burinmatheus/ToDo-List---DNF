@@ -22,7 +22,7 @@ public class ServletDNF extends HttpServlet {
         try (PrintWriter saida = response.getWriter()) {
 
             try {
-                saida.print(EJBConnection.execMethod("EJBdonotforget/Funcoes", request.getParameter("funcao"), request, response));
+                saida.print(EJBConnection.execMethod(request.getParameter("caminho"), request.getParameter("funcao"), request, response));
             } catch (Exception ex) {
                 try (PrintWriter out = response.getWriter()) {
                     response.setStatus(500);
